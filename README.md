@@ -29,6 +29,11 @@ The code for the ECOSTRESS level 3 JET PGE has been developed using open-science
 
 The repositories for the evapotranspiration algorithms are located in the [JPL-Evapotranspiration-Algorithms](https://github.com/JPL-Evapotranspiration-Algorithms) organization.
 
+## Installation
+
+Install with `pip install .` from a clone (Python 3.11 to 3.13). The PGE also calls the GDAL command-line tools (`gdalinfo`, `gdalbuildvrt`, `gdal_translate`), which pip does not install: add them with `conda install -c conda-forge gdal` (as `make environment` does) or `apt-get install gdal-bin`.
+To run it, write a run-config with `generate_L3T_L4T_JET_runconfig` (it takes Collection 3 or Collection 2 L2T LSTE and STARS granules) and pass it to `ECOv003-L3T-L4T-JET <runconfig.xml>`.
+
 ## 1. Introduction 
 
 This software produces estimates of:
