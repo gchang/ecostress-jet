@@ -1,11 +1,12 @@
 from os import makedirs
-from os.path import join, dirname, abspath, expanduser
+from os.path import join, dirname, abspath, expanduser, basename
 from shutil import which
 import socket
 from uuid import uuid4
 from datetime import datetime
 
-from ECOv002_granules import L2TLSTE
+from ECOv003_granules import L2TLSTE
+from ECOv002_granules import L2TLSTE as ECOv002L2TLSTE
 
 import logging
 import colored_logging as cl
@@ -36,7 +37,14 @@ def generate_L3T_L4T_JET_runconfig(
         product_counter: int = None,
         template_filename: str = None,
         collection: str = "003") -> str:
-    L2T_LSTE_granule = L2TLSTE(L2T_LSTE_filename)
+    # Load L2T LSTE granule based on collection version
+    L2T_LSTE_basename = basename(abspath(expanduser(str(L2T_LSTE_filename))))
+    if "ECOv003" in L2T_LSTE_basename:
+        L2T_LSTE_granule = L2TLSTE(L2T_LSTE_filename)
+    elif "ECOv002" in L2T_LSTE_basename:
+        L2T_LSTE_granule = ECOv002L2TLSTE(L2T_LSTE_filename)
+    else:
+        raise ValueError(f"collection not recognized in L2T LSTE filename: {L2T_LSTE_filename}")
 
     if orbit is None:
         orbit = L2T_LSTE_granule.orbit
