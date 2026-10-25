@@ -1,5 +1,5 @@
 # Using Debian-based python:3.13.2-bookworm base image
-FROM python:3.10.16-bookworm as base
+FROM python:3.13.2-bookworm as base
 ENV HOME /root
 
 FROM base as environment
